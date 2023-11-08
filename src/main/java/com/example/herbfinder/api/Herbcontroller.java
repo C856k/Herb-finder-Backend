@@ -9,15 +9,17 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 public class Herbcontroller {
     private OpenAIService service;
-    final static String SYSTEM_MESSAGE = "Act like a high level herbalist and alchemist in world of warcraft, that tells the locations of the required ingredients";
+    final static String SYSTEM_MESSAGE = "You are a high level player with herbalism and alchemy in world of warcraft dragonflight that can provide an answer to where i can find the ingredients, given a user input";
 
     public Herbcontroller(OpenAIService service) {
         this.service = service;
     }
     @GetMapping
-    public MyResponse getHerb(@RequestParam String about) {
-
+    public MyResponse getHerb(@RequestParam("about")String about) {
         return service.makeRequest(about,SYSTEM_MESSAGE);
+
     }
+
+
 
 }

@@ -4,6 +4,7 @@ import com.example.herbfinder.dtos.ChatCompletionRequest;
 import com.example.herbfinder.dtos.ChatCompletionResponse;
 import com.example.herbfinder.dtos.MyResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,12 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
-
 
 @Service
 public class OpenAIService {
@@ -28,12 +27,12 @@ public class OpenAIService {
     public final static String URL ="https://api.openai.com/v1/chat/completions";
     public final static String MODEL = "gpt-4";
     public final static double TEMPERATURE = 1;
-    public final static int MAX_TOKENS = 256;
+    public final static int MAX_TOKENS = 4000;
     public final static double FREQUENCY_PENALTY = 0.0;
     public final static double PRESENCE_PENALTY = 0.0;
     public final static double TOP_P = 1.0;
 
-    private WebClient client;
+    WebClient client = WebClient.create();
 
     public OpenAIService() {
         this.client = WebClient.create();
@@ -44,6 +43,7 @@ public class OpenAIService {
     }
 
     public MyResponse makeRequest(String userPrompt, String _systemMessage){
+
         ChatCompletionRequest requestDto = new ChatCompletionRequest();
         requestDto.setModel(MODEL);
         requestDto.setTemperature(TEMPERATURE);

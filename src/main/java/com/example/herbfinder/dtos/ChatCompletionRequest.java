@@ -2,7 +2,7 @@ package com.example.herbfinder.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.logging.log4j.message.Message;
+
 
 import java.util.ArrayList;
 import java.util.List;
