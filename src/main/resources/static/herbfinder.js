@@ -6,16 +6,25 @@ document.getElementById('btn-get-herb').addEventListener('click', getHerb);
 async function getHerb() {
     const URL = `${SERVER_URL}herbs?about=${document.getElementById('search-input').value}`
     const result = document.getElementById('result');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const loadingText = document.getElementById('loading-text');
+    result.style.color = "white";
+
+    loadingSpinner.style.display = "block";
+    loadingText.style.display = "block";
     try {
         const response = await fetch(URL).then(handleHttpErrors)
         document.getElementById('result').innerText = response.answer;
-        //document.getElementById('about').value = ''
+
     } catch (e) {
         result.style.color = "red";
         result.innerText = e.message;
+    } finally {
+        loadingSpinner.style.display = "none";
+        loadingText.style.display = "none";
     }
 }
-
+/*
 async function getJokeWithRateLimit() {
     const URL = `${SERVER_URL}joke2/limited?about= + ${document.getElementById('about2').value}`
     const result2 = document.getElementById('result2');
@@ -33,6 +42,7 @@ async function getJokeWithRateLimit() {
         spinner2.style.display = "none";
     }
 }
+
 
 async function getInfo() {
     const URL = `${SERVER_URL}owninfo?question= + ${document.getElementById('the-question').value}`
@@ -61,6 +71,8 @@ async function getInfo() {
         });
     }
 }
+
+ */
 
 async function handleHttpErrors(res) {
     if (!res.ok) {
